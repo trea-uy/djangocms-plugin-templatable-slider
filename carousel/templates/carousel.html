@@ -1,0 +1,26 @@
+{% load sekizai_tags %}
+{% addtoblock "js" %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#{{ instance.domid }}").carousel({interval: {{ instance.interval }}});
+});
+</script>
+{% endaddtoblock %}
+<div id="{{ instance.domid }}" class="carousel slide">
+  <ol class="carousel-indicators">
+    {% for item in instance.carouselitem_set.all %}
+      <li data-slide-to="{{forloop.counter0}}" data-target="#{{ instance.domid }}" class="{% if forloop.first %}active {% endif %}"></li>      
+    {% endfor %}  
+  </ol>
+  <div class="carousel-inner">{% for item in instance.carouselitem_set.all %}
+    <div class="{% if forloop.first %}active {% endif %}item">
+      {% if item.image %}  
+      	<img alt="" src="{{ item.image.url }}">
+      {% endif %}  	
+      <div class="carousel-caption">
+        <h1>{{ item.caption_title|upper }}</h1>
+        <p>{{ item.caption_content|upper }}</p>
+      </div>
+    </div>{% endfor %}
+  </div>  
+</div>

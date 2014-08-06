@@ -1,0 +1,32 @@
+{% load sekizai_tags %}
+{% addtoblock "js" %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#{{ instance.domid }}").carousel({interval: {{ instance.interval }}});
+});
+</script>
+{% endaddtoblock %}
+
+<div id="{{ instance.domid }}" class="carousel slide">  
+ <div id="innerTransactions" class="carousel-inner">
+    {% for item in instance.carouselitem_set.all %}
+    <div class="{% if forloop.first %}active {% endif %}item">
+      <div class="col-md-5 image-transaction">
+        <img class="img-responsive" alt="" src="{{ item.image.url }}">
+      </div>  
+
+        <div class="col-md-6 caption-slider">
+          <h1>{{ item.caption_title|upper }}</h1>
+          <p>{{ item.caption_content|safe }}</p>
+        </div> 
+    </div>
+    {% endfor %}
+  </div>
+  <!-- Controls -->
+  <a id="LeftArrow" class="left carousel-control" href="#{{ instance.domid }}" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a id="RightArrow" class="right carousel-control" href="#{{ instance.domid }}" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>                  
+</div>  
